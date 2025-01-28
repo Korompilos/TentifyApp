@@ -31,6 +31,10 @@ const menuData = {
     { id: '21', name: 'Ceasar`s Salad', price: 5.0 },
     { id: '22', name: 'Carbonara', price: 6.5 },
     { id: '23', name: 'Bolongese', price: 6.0 },
+    { id: '24', name: 'Pizza Pepperoni', price: 9.0 },
+    { id: '25', name: 'Pizza Margherita', price: 8.5 },
+    { id: '26', name: 'Chicken Wings', price: 5.0 },
+    { id: '26', name: 'Chicken Strips', price: 5.5 },
   ],
 };
 
@@ -101,22 +105,30 @@ const cafe = () => {
               style={styles.headerImage}
               resizeMode="contain"
             />
-            <Text style={styles.title}>{selectedCategory} Menu</Text>
-            <FlatList
-              data={menuData[selectedCategory]}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <View style={styles.menuItem}>
-                  <Text style={styles.itemText}>{item.name} - €{item.price}</Text>
-                  <Button title="Add" onPress={() => handleAddToCart(item)} />
-                </View>
-              )}
-                numColumns={numColumns} // Χρησιμοποιεί την κατάσταση
-                columnWrapperStyle={styles.row}
-                key={`numColumns-${numColumns}`} // Δημιουργεί μοναδικό key
-            />
-            <Button title="Go to Cart" onPress={() => setCurrentScreen('Cart')} />
-            <Button title="Back to Home" onPress={() => setCurrentScreen('Home')} />
+            <Text style={styles.title2}>{selectedCategory} Menu</Text>
+              <FlatList
+                data={menuData[selectedCategory]}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                  <View style={styles.menuItem}>
+                    <Text style={styles.itemText}>{item.name} - €{item.price}</Text>
+                    <TouchableOpacity style={styles.addButton} onPress={() => handleAddToCart(item)}>
+                      <Text style={styles.addButtonText}>ADD</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+                numColumns={2} // Ορίζει ότι θα υπάρχουν 2 στήλες
+                columnWrapperStyle={styles.row} // Ευθυγραμμίζει οριζόντια τα στοιχεία
+                key={`numColumns-2`} // Για να ανανεώνεται σωστά η λίστα
+              />
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.navButton} onPress={() => setCurrentScreen('Cart')}>
+                  <Text style={styles.navButtonText}>GO TO CART</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navButton} onPress={() => setCurrentScreen('Home')}>
+                  <Text style={styles.navButtonText}>BACK</Text>
+                </TouchableOpacity>
+              </View>
             </ImageBackground>
             </SafeAreaView>
 
@@ -134,7 +146,7 @@ const cafe = () => {
               style={styles.headerImage}
               resizeMode="contain"
             />
-            <Text style={styles.title}>Your Cart</Text>
+            <Text style={styles.title2}>Your Cart</Text>
             {cart.length > 0 ? (
               <FlatList
                 data={cart}
@@ -150,7 +162,7 @@ const cafe = () => {
               <Button title="Place Order" onPress={handlePlaceOrder} />
             )}
             <Text style={styles.status}>Order Status: {orderStatus}</Text>
-            <Button title="Back to Home" onPress={() => setCurrentScreen('Home')} />
+              <Button title="Back" onPress={() => setCurrentScreen('Home')} color='#606FB6' />
             </ImageBackground>
             </SafeAreaView>
         );
@@ -174,6 +186,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  buttonContainer: {
+    marginTop: 40, // Σπρώχνει τα κουμπιά πιο κάτω
+    flexDirection: 'row', // Τα κάνει να μπαίνουν δίπλα-δίπλα
+    justifyContent: 'center', // Κεντράρει οριζόντια
+  },
+  navButton: {
+    backgroundColor: '#606FB6',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginHorizontal: 10, // Δίνει απόσταση μεταξύ των κουμπιών
+  },
+  navButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   headerImage: {
     width: '100%',
     height: Platform.OS === 'web' ? 200 : 150,
@@ -181,49 +210,83 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: Platform.OS === 'web' ? -60 : -70,
   },
+  btns: {
+    backgroundColor: '#606FB6',
+    borderRadius: 15,
+  },
   content: {
     marginTop: 150,
     width: '90%',
     alignItems: 'center',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 44,
+    fontFamily: 'Things',
     marginBottom: 20,
     textAlign: 'center',
     color: 'white',
+    top: 0
+  },
+  title2: {
+    fontSize: 44,
+    fontFamily: 'Things',
+    marginBottom: 20,
+    textAlign: 'center',
+    color: 'white',
+    top: 100
   },
   button: {
     padding: 15,
     backgroundColor: '#606FB6',
     marginVertical: 10,
+   
     borderRadius: 5,
     width: '80%',
   },
   buttonText: {
     color: 'white',
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 28,
+    fontFamily: 'Things',
   },
   menuItem: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginVertical: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    padding: 10,
+    borderRadius: 8,
+    marginHorizontal: 5, // Για να μην κολλάνε στις άκρες
+    minWidth: '45%', // Για να έχουν παρόμοιο πλάτος
+    top: 0
   },
   itemText: {
     fontSize: 18,
     color: 'white',
+    flex: 1, // Για σωστή στοίχιση
+    textAlign: 'center',
+  },
+  addButton: {
+    backgroundColor: '#606FB6',
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+  },
+  addButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
   status: {
     marginTop: 20,
-    fontSize: 18,
+    fontSize: 28,
+    fontFamily: 'Things',
     textAlign: 'center',
     color: 'white',
   },
   row: {
     flex: 1,
-    justifyContent: 'space-around', // Κεντράρει τα αντικείμενα στις σειρές
-    marginBottom: 15,
+    justifyContent: 'space-around', // Δημιουργεί χώρο ανάμεσα στις στήλες
+    marginBottom: 10,
   },
 });
