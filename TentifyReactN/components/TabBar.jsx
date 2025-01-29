@@ -18,6 +18,23 @@ const TabBar = ({ state, descriptors, navigation }) => {
     const visibleRoutes = ['onlinehelp', 'energy', 'cafe', 'weather']; // Προσαρμόστε τα ονόματα
     
     const [modalVisible, setModalVisible] = useState(false);
+    const [randomNumber, setRandomNumber] = useState(null);
+
+    // Αντιστοίχιση αριθμών σε εικόνες
+    const imageMap = {
+        1: require('../assets/images/weather1.png'),
+        2: require('../assets/images/weather2.png'),
+        3: require('../assets/images/weather3.png'),
+        4: require('../assets/images/weather4.png'),
+    };
+
+    const generateRandomNumber = () => {
+        if (randomNumber === null) {
+            const newRandomNumber = Math.floor(Math.random() * 4) + 1;
+            setRandomNumber(newRandomNumber);
+        }
+        setModalVisible(true);
+    };
 
     return ( 
         <View style={styles.tabbar}>
@@ -51,7 +68,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
                             testID={options.tabBarTestID}
                             onPress={() => {
                                 if (route.name === 'weather') {
-                                    setModalVisible(true);
+                                    generateRandomNumber();
                                 } else {
                                     // Κατασκευή απλού URL βασισμένου στο όνομα του route
                                     const url = `/${route.name}`;
@@ -75,7 +92,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
             <Modal visible={modalVisible} transparent animationType="fade">
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                        <Image source={require('../assets/images/weather1.png')} style={styles.weatherImage} />
+                        <Image source={imageMap[randomNumber || 1]} style={styles.weatherImage} />
                         <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
                             <Text style={styles.closeButtonText}>Close</Text>
                         </TouchableOpacity>
