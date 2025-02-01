@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button, Switch, Platform, Image } from 'react-native';
+import { View, Text, StyleSheet, Button, Switch, Platform, Image, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { ImageBackground } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
@@ -41,44 +41,54 @@ const energy = () => {
     setEnergyConsumption((prev) => Math.max(0, prev + change));
   };
 
+  const showAlert = () => {
+    window.alert('The battery level is')
+  }
+   
   useEffect(() => {
     const interval = setInterval(() => {
       // Όταν όλα είναι ανοιχτά, η μπαταρία μειώνεται δραστικά
       if (isACOn && isLightsOn && isHeatingOn && isAppliancesOn) {
-        setBatteryLevel((prev) => Math.max(0, prev - 6.9));
+        setBatteryLevel((prev) => Math.max(0, prev - 2.9));
       }
       // Όταν είναι ενεργοποιημένα τα 3: Φώτα, Θέρμανση και Συσκευές
       else if (isLightsOn && isHeatingOn && isAppliancesOn) {
-        setBatteryLevel((prev) => Math.max(0, prev - 5.1));
+        setBatteryLevel((prev) => Math.max(0, prev - 1.1));
       }
       // Όταν είναι ενεργοποιημένα AC, Φώτα και Θέρμανση
       else if (isACOn && isLightsOn && isHeatingOn) {
-        setBatteryLevel((prev) => Math.max(0, prev - 5.1));
+        setBatteryLevel((prev) => Math.max(0, prev - 1.1));
       }
       // Όταν είναι ενεργοποιημένα μόνο AC και Φώτα
       else if (isACOn && isLightsOn) {
-        setBatteryLevel((prev) => Math.max(0, prev - 2.2));
+        setBatteryLevel((prev) => Math.max(0, prev - 0.2));
       }
       // Όταν είναι ενεργοποιημένα AC και Θέρμανση
       else if (isACOn && isHeatingOn) {
-        setBatteryLevel((prev) => Math.max(0, prev - 2.2));
+        setBatteryLevel((prev) => Math.max(0, prev - 0.2));
       }
       // Όταν είναι ενεργοποιημένα AC και Συσκευές
       else if (isACOn && isAppliancesOn) {
-        setBatteryLevel((prev) => Math.max(0, prev - 2.2));
+        setBatteryLevel((prev) => Math.max(0, prev - 0.2));
       }
       // Όταν όλα είναι κλειστά, η μπαταρία φορτίζει σταδιακά
       else if (!isACOn && !isLightsOn && !isHeatingOn && !isAppliancesOn) {
-        setBatteryLevel((prev) => Math.min(100, prev + 3.5));
+        setBatteryLevel((prev) => Math.min(100, prev + 1.5));
       }
       // Ανάλογα με την κατανάλωση, η μπαταρία μειώνεται σταδιακά
       else {
         setBatteryLevel((prev) => Math.max(0, prev - energyConsumption / 50));
       }
+
+      
     }, 1000); // Ενημέρωση κάθε δευτερόλεπτο
 
     return () => clearInterval(interval);
   }, [isACOn, isLightsOn, isHeatingOn, isAppliancesOn, energyConsumption]);
+
+  if (batteryLevel < 39) {
+    showAlert();
+  }
 
   return (
     <SafeAreaProvider>
@@ -123,10 +133,12 @@ const energy = () => {
               <Button
                 title="REDUCE CONSUMPTION"
                 onPress={() => {
-                  if (isLightsOn) toggleLights();
-                  if (isACOn) toggleAC();
-                  if (isHeatingOn) toggleHeating();
-                  if (isAppliancesOn) toggleAppliances();
+                  if (batteryLevel < 25) {
+                    if (isLightsOn) toggleLights();
+                    if (isACOn) toggleAC();
+                    if (isHeatingOn) toggleHeating();
+                    if (isAppliancesOn) toggleAppliances();
+                  }
                 }}
                 color="#ff6347"
               />

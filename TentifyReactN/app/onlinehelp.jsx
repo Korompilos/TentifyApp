@@ -12,8 +12,8 @@ const onlinehelp = () => {
     { id: 3, buttonText: 'Covers Selection', header: 'SELECT THE PROTECTIVE COVER FOR YOUR TENT.', content: 'The next step is to choose the protective cover you will place on top of your tent. You will be given 3 choices (normal, windproof, waterproof) but also the choice to not use a cover. The app will provide an alert message, informing you about the weather conditions and recommend to you the most suitable cover.' },
     { id: 4, buttonText: 'Lighting & FX', header: 'SELECT A COLOR OR A PRE-MADE EFFECT FOR YOUR TENT`S LIGHTING.', content: 'Pick your desired color from the palette and modify its brightness and contrast as you wish! In the panel on the left you will see real-time how the lighting will be. On the other hand, you can also choose to use one of our premade effects, although you will not be able to modify them (brightness, contrast). \n \n You are not able to use a premade effect and a coloured lighting! Choose only one of the options!' },
     { id: 5, buttonText: 'Energy Management', header: 'Header 5', content: 'This is content for modal 5' },
-    { id: 6, buttonText: '678', header: 'Header 6', content: 'This is content for modal 6' },
-    { id: 7, buttonText: '789', header: 'Header 7', content: 'This is content for modal 7' },
+    { id: 6, buttonText: 'Coffee & Food', header: 'Header 6', content: 'This is content for modal 6' },
+    { id: 7, buttonText: 'TabBar', header: 'Header 7', content: 'This is content for modal 7' },
   ];
 
   const [modalVisible, setModalVisible] = useState(false);

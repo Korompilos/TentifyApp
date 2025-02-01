@@ -106,6 +106,7 @@ const cafe = () => {
               resizeMode="contain"
             />
             <Text style={styles.title2}>{selectedCategory} Menu</Text>
+              <View style={{ flex: 1, paddingTop: 100 }}>
               <FlatList
                 data={menuData[selectedCategory]}
                 keyExtractor={(item) => item.id}
@@ -113,7 +114,7 @@ const cafe = () => {
                   <View style={styles.menuItem}>
                     <Text style={styles.itemText}>{item.name} - €{item.price}</Text>
                     <TouchableOpacity style={styles.addButton} onPress={() => handleAddToCart(item)}>
-                      <Text style={styles.addButtonText}>ADD</Text>
+                      <Text style={styles.addButtonText}>+</Text>
                     </TouchableOpacity>
                   </View>
                 )}
@@ -121,6 +122,7 @@ const cafe = () => {
                 columnWrapperStyle={styles.row} // Ευθυγραμμίζει οριζόντια τα στοιχεία
                 key={`numColumns-2`} // Για να ανανεώνεται σωστά η λίστα
               />
+              </View>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.navButton} onPress={() => setCurrentScreen('Cart')}>
                   <Text style={styles.navButtonText}>GO TO CART</Text>
@@ -190,6 +192,7 @@ const styles = StyleSheet.create({
     marginTop: 40, // Σπρώχνει τα κουμπιά πιο κάτω
     flexDirection: 'row', // Τα κάνει να μπαίνουν δίπλα-δίπλα
     justifyContent: 'center', // Κεντράρει οριζόντια
+    top: -40
   },
   navButton: {
     backgroundColor: '#606FB6',
@@ -259,7 +262,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 5, // Για να μην κολλάνε στις άκρες
     minWidth: '45%', // Για να έχουν παρόμοιο πλάτος
-    top: 0
   },
   itemText: {
     fontSize: 18,
