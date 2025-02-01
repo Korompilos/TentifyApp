@@ -54,10 +54,11 @@ const cafe = () => {
 
   const handlePlaceOrder = () => {
     setOrderStatus('Processing');
-    setTimeout(() => setOrderStatus('Ready'), 3000); // Simulate order preparation
+    setTimeout(() => setOrderStatus('Ready'), 4000); // Simulate order preparation
+    setTimeout(() => setCart([]), 6000)
   };
 
-  const [numColumns, setNumColumns] = useState(3);
+  
 
   const renderScreen = () => {
     switch (currentScreen) {
@@ -149,6 +150,7 @@ const cafe = () => {
               resizeMode="contain"
             />
             <Text style={styles.title2}>Your Cart</Text>
+              <View style={{ flex: 1, paddingTop: 100 }}>
             {cart.length > 0 ? (
               <FlatList
                 data={cart}
@@ -161,10 +163,11 @@ const cafe = () => {
               <Text style={styles.itemText}>Your cart is empty.</Text>
             )}
             {cart.length > 0 && (
-              <Button title="Place Order" onPress={handlePlaceOrder} />
+                  <Button title="Place Order" onPress={handlePlaceOrder}/>
             )}
             <Text style={styles.status}>Order Status: {orderStatus}</Text>
               <Button title="Back" onPress={() => setCurrentScreen('Home')} color='#606FB6' />
+              </View>
             </ImageBackground>
             </SafeAreaView>
         );

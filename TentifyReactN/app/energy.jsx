@@ -11,6 +11,8 @@ const energy = () => {
   const [batteryLevel, setBatteryLevel] = useState(100); // Επίπεδο μπαταρίας (%)
   const [energyConsumption, setEnergyConsumption] = useState(0); // Κατανάλωση (W)
 
+  const [myNumber, setMyNumber] = useState(0); // Αριθμητική μεταβλητή (integer)
+
   const headerImageSource =
     Platform.OS === 'web'
       ? require('../assets/images/top.png')
@@ -19,22 +21,22 @@ const energy = () => {
   // Υπολογισμός ενέργειας για κάθε κατηγορία
   const toggleAC = () => {
     setIsACOn((prev) => !prev);
-    updateEnergyConsumption(!isACOn ? 15 : -15);
+    updateEnergyConsumption(!isACOn ? 30 : -30);
   };
 
   const toggleLights = () => {
     setIsLightsOn((prev) => !prev);
-    updateEnergyConsumption(!isLightsOn ? 10 : -10);
+    updateEnergyConsumption(!isLightsOn ? 20 : -20);
   };
 
   const toggleHeating = () => {
     setIsHeatingOn((prev) => !prev);
-    updateEnergyConsumption(!isHeatingOn ? 20 : -20);
+    updateEnergyConsumption(!isHeatingOn ? 50 : -50);
   };
 
   const toggleAppliances = () => {
     setIsAppliancesOn((prev) => !prev);
-    updateEnergyConsumption(!isAppliancesOn ? 25 : -25);
+    updateEnergyConsumption(!isAppliancesOn ? 35 : -35);
   };
 
   const updateEnergyConsumption = (change) => {
@@ -42,22 +44,26 @@ const energy = () => {
   };
 
   const showAlert = () => {
-    window.alert('The battery level is')
+    window.alert('The battery level is dropping, please close something (for example the AC) to reduce consumption.')
   }
-   
+
+  const showAlert2 = () => {
+    window.alert('The battery level is reducing fast, press Reduce Consumption.')
+  }
+
   useEffect(() => {
     const interval = setInterval(() => {
       // Όταν όλα είναι ανοιχτά, η μπαταρία μειώνεται δραστικά
       if (isACOn && isLightsOn && isHeatingOn && isAppliancesOn) {
-        setBatteryLevel((prev) => Math.max(0, prev - 2.9));
+        setBatteryLevel((prev) => Math.max(0, prev - 1.9));
       }
       // Όταν είναι ενεργοποιημένα τα 3: Φώτα, Θέρμανση και Συσκευές
       else if (isLightsOn && isHeatingOn && isAppliancesOn) {
-        setBatteryLevel((prev) => Math.max(0, prev - 1.1));
+        setBatteryLevel((prev) => Math.max(0, prev - 0.6));
       }
       // Όταν είναι ενεργοποιημένα AC, Φώτα και Θέρμανση
       else if (isACOn && isLightsOn && isHeatingOn) {
-        setBatteryLevel((prev) => Math.max(0, prev - 1.1));
+        setBatteryLevel((prev) => Math.max(0, prev - 0.6));
       }
       // Όταν είναι ενεργοποιημένα μόνο AC και Φώτα
       else if (isACOn && isLightsOn) {
@@ -77,7 +83,7 @@ const energy = () => {
       }
       // Ανάλογα με την κατανάλωση, η μπαταρία μειώνεται σταδιακά
       else {
-        setBatteryLevel((prev) => Math.max(0, prev - energyConsumption / 50));
+        setBatteryLevel((prev) => Math.max(0, prev - energyConsumption / 100));
       }
 
       
@@ -86,8 +92,26 @@ const energy = () => {
     return () => clearInterval(interval);
   }, [isACOn, isLightsOn, isHeatingOn, isAppliancesOn, energyConsumption]);
 
-  if (batteryLevel < 39) {
+  if (batteryLevel < 39 & myNumber === 0) {
+    setMyNumber(prev => prev + 1);
     showAlert();
+  }
+
+  if (batteryLevel < 24 & myNumber === 1) {
+    setMyNumber(prev => prev + 1);
+    showAlert();
+  }
+
+  if (batteryLevel < 11 & myNumber === 2) {
+    setMyNumber(prev => prev + 1);
+    showAlert2();
+  }
+
+  if (batteryLevel < 5) {
+    if (isLightsOn) toggleLights();
+    if (isACOn) toggleAC();
+    if (isHeatingOn) toggleHeating();
+    if (isAppliancesOn) toggleAppliances();
   }
 
   return (
