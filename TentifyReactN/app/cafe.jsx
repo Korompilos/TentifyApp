@@ -9,8 +9,8 @@ const menuData = {
     { id: '1', name: 'Espresso', price: 2.5 },
     { id: '2', name: 'Cappuccino', price: 3.0 },
     { id: '3', name: 'Greek Coffee', price: 2.5 },
-    { id: '4', name: 'Orange Juice', price: 3.0 },
-    { id: '5', name: 'Orangade', price: 3.0 },
+    { id: '4', name: 'Water', price: 0.5 },
+    { id: '5', name: 'Orange Juice', price: 3.0 },
     { id: '6', name: 'Lemonade', price: 2.5 },
     { id: '7', name: 'Soda', price: 2.5 },
     { id: '8', name: 'Coca Cola', price: 2.5 },
@@ -52,10 +52,26 @@ const cafe = () => {
     setCart((prev) => [...prev, item]);
   };
 
+  const handleRemoveFromCart = (item) => {
+    setCart((prev) => {
+      const index = prev.findIndex(cartItem => cartItem.id === item.id);
+      if (index !== -1) {
+        const updatedCart = [...prev];
+        updatedCart.splice(index, 1); // Αφαιρεί μόνο το πρώτο που βρίσκει
+        return updatedCart;
+      }
+      return prev;
+    });
+  };
+
+
+
   const handlePlaceOrder = () => {
     setOrderStatus('Processing');
-    setTimeout(() => setOrderStatus('Ready'), 4000); // Simulate order preparation
-    setTimeout(() => setCart([]), 6000)
+    setTimeout(() => setOrderStatus('Ready'), 6000); // Simulate order preparation
+    setTimeout(() => setOrderStatus('Delivered'), 10000); // Simulate order preparation
+    setTimeout(() => setOrderStatus('Make another Delivery!'), 12000); // Simulate order preparation
+    setTimeout(() => setCart([]), 13000)
   };
 
   
@@ -156,8 +172,17 @@ const cafe = () => {
                 data={cart}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
-                  <Text style={styles.itemText}>{item.name} - ${item.price}</Text>
+                  <View style={styles.menuItem}>
+                    <Text style={styles.itemText}>{item.name} - €{item.price}</Text>
+                    <TouchableOpacity style={styles.addButton} onPress={() => handleRemoveFromCart(item)}>
+                      <Text style={styles.addButtonText}>-</Text>
+                    </TouchableOpacity>
+                  </View>
+                  
                 )}
+                    numColumns={2} // Ορίζει ότι θα υπάρχουν 2 στήλες
+                    columnWrapperStyle={styles.row} // Ευθυγραμμίζει οριζόντια τα στοιχεία
+                    key={`numColumns-2`} // Για να ανανεώνεται σωστά η λίστα
               />
             ) : (
               <Text style={styles.itemText}>Your cart is empty.</Text>

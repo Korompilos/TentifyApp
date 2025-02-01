@@ -12,8 +12,7 @@ const onlinehelp = () => {
     { id: 3, buttonText: 'Covers Selection', header: 'SELECT THE PROTECTIVE COVER FOR YOUR TENT.', content: 'The next step is to choose the protective cover you will place on top of your tent. You will be given 3 choices (normal, windproof, waterproof) but also the choice to not use a cover. The app will provide an alert message, informing you about the weather conditions and recommend to you the most suitable cover.' },
     { id: 4, buttonText: 'Lighting & FX', header: 'SELECT A COLOR OR A PRE-MADE EFFECT FOR YOUR TENT`S LIGHTING.', content: 'Pick your desired color from the palette and modify its brightness and contrast as you wish! In the panel on the left you will see real-time how the lighting will be. On the other hand, you can also choose to use one of our premade effects, although you will not be able to modify them (brightness, contrast). \n \n You are not able to use a premade effect and a coloured lighting! Choose only one of the options!' },
     { id: 5, buttonText: 'Energy Management', header: 'Header 5', content: 'This is content for modal 5' },
-    { id: 6, buttonText: 'Coffee & Food', header: 'Header 6', content: 'This is content for modal 6' },
-    { id: 7, buttonText: 'TabBar', header: 'Header 7', content: 'This is content for modal 7' },
+    { id: 6, buttonText: 'Coffee & Food', header: 'ORDER SOMETHING TO DRINK AND/OR EAT!', content: 'Pick whatever you want from Coffee/Drinks and Food and order it to your tent! There are plenty of choices for you to choose from, add what you desire to the cart by pressing the "+" button .If you choose the category coffee/drinks and add something to the cart, but you also want to add something to eat, press "back", select the category food and add what you desire. The cart will still have what you chose to drink! After going to the cart, complete your order by pressing "Place Order". You will be able to see the Order Status (e.g. Pending, Ready).' },
   ];
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -62,6 +61,9 @@ const onlinehelp = () => {
               </Pressable>
             ))}
           </View>
+          <Text style={styles.text2}>
+            If our online-help does not cover your needs/questions, you can refer to our user manual!
+          </Text>
         </ImageBackground>
 
         {/* Modal */}
@@ -112,14 +114,21 @@ const styles = StyleSheet.create({
     color: 'white',
     alignContent: 'center',
     fontSize: 75,
-    top: -140,
+    top: -130,
   },
   text: {
     fontFamily: 'Things',
     color: 'white',
     alignContent: 'center',
     fontSize: 25,
-    top: -140,
+    top: -130,
+  },
+  text2: {
+    fontFamily: 'Things',
+    color: 'white',
+    alignContent: 'center',
+    fontSize: 25,
+    top: 50,
   },
   button: {
     borderRadius: 20,

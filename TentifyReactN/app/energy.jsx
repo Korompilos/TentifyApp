@@ -157,7 +157,7 @@ const energy = () => {
               <Button
                 title="REDUCE CONSUMPTION"
                 onPress={() => {
-                  if (batteryLevel < 25) {
+                  if (batteryLevel < 39) {
                     if (isLightsOn) toggleLights();
                     if (isACOn) toggleAC();
                     if (isHeatingOn) toggleHeating();
