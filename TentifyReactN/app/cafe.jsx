@@ -36,6 +36,7 @@ const menuData = {
     { id: '26', name: 'Chicken Wings', price: 5.0 },
     { id: '26', name: 'Chicken Strips', price: 5.5 },
   ],
+  
 };
 
 const cafe = () => {
@@ -105,6 +106,14 @@ const cafe = () => {
                     <Text style={styles.buttonText}>{category}</Text>
                   </TouchableOpacity>
                 ))}
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    setCurrentScreen('Chat');
+                  }}
+                >
+                  <Text style={styles.buttonText}>Chat</Text>
+                </TouchableOpacity>
               </View>
             </ImageBackground>
           </SafeAreaView>
@@ -160,39 +169,56 @@ const cafe = () => {
               style={styles.container}
               resizeMode="cover"
             >
+              <Image
+                source={headerImageSource}
+                style={styles.headerImage}
+                resizeMode="contain"
+              />
+              <Text style={styles.title2}>Your Cart</Text>
+              <View style={{ flex: 1, paddingTop: 100 }}>
+                {cart.length > 0 ? (
+                  <FlatList
+                    data={cart}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) => (
+                      <View style={styles.menuItem}>
+                        <Text style={styles.itemText}>{item.name} - €{item.price}</Text>
+                        <TouchableOpacity style={styles.addButton} onPress={() => handleRemoveFromCart(item)}>
+                          <Text style={styles.addButtonText}>-</Text>
+                        </TouchableOpacity>
+                      </View>
+
+                    )}
+                    numColumns={2} // Ορίζει ότι θα υπάρχουν 2 στήλες
+                    columnWrapperStyle={styles.row} // Ευθυγραμμίζει οριζόντια τα στοιχεία
+                    key={`numColumns-2`} // Για να ανανεώνεται σωστά η λίστα
+                  />
+                ) : (
+                  <Text style={styles.itemText}>Your cart is empty.</Text>
+                )}
+                {cart.length > 0 && (
+                  <Button title="Place Order" onPress={handlePlaceOrder} />
+                )}
+                <Text style={styles.status}>Order Status: {orderStatus}</Text>
+                <Button title="Back" onPress={() => setCurrentScreen('Home')} color='#606FB6' />
+              </View>
+            </ImageBackground>
+          </SafeAreaView>
+        );
+      case 'Chat':
+        return (
+          <SafeAreaView>
+            <ImageBackground
+              source={require('../assets/images/background-image2.jpg')}
+              style={styles.container}
+              resizeMode="cover"
+            >
             <Image
               source={headerImageSource}
               style={styles.headerImage}
               resizeMode="contain"
             />
-            <Text style={styles.title2}>Your Cart</Text>
-              <View style={{ flex: 1, paddingTop: 100 }}>
-            {cart.length > 0 ? (
-              <FlatList
-                data={cart}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => (
-                  <View style={styles.menuItem}>
-                    <Text style={styles.itemText}>{item.name} - €{item.price}</Text>
-                    <TouchableOpacity style={styles.addButton} onPress={() => handleRemoveFromCart(item)}>
-                      <Text style={styles.addButtonText}>-</Text>
-                    </TouchableOpacity>
-                  </View>
-                  
-                )}
-                    numColumns={2} // Ορίζει ότι θα υπάρχουν 2 στήλες
-                    columnWrapperStyle={styles.row} // Ευθυγραμμίζει οριζόντια τα στοιχεία
-                    key={`numColumns-2`} // Για να ανανεώνεται σωστά η λίστα
-              />
-            ) : (
-              <Text style={styles.itemText}>Your cart is empty.</Text>
-            )}
-            {cart.length > 0 && (
-                  <Button title="Place Order" onPress={handlePlaceOrder}/>
-            )}
-            <Text style={styles.status}>Order Status: {orderStatus}</Text>
-              <Button title="Back" onPress={() => setCurrentScreen('Home')} color='#606FB6' />
-              </View>
+            
             </ImageBackground>
             </SafeAreaView>
         );
