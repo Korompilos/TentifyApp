@@ -4,6 +4,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const TabBar = ({ state, descriptors, navigation }) => {
 
@@ -12,10 +13,11 @@ const TabBar = ({ state, descriptors, navigation }) => {
         energy: (props) => <SimpleLineIcons name="energy" size={24} color="white" {...props} />,
         cafe: (props) => <Ionicons name="fast-food" size={24} color="white" {...props} />,
         weather: (props) => <MaterialCommunityIcons name="weather-partly-lightning" size={24} color="white" {...props} />,
+        sports: (props) => <MaterialIcons name="sports-handball" size={24} color="white" {...props} />,
     };
 
     // Καθορισμός των routes που θέλουμε να εμφανίζονται
-    const visibleRoutes = ['onlinehelp', 'energy', 'cafe', 'weather']; // Προσαρμόστε τα ονόματα
+    const visibleRoutes = ['onlinehelp', 'energy', 'cafe', 'weather', 'sports']; // Προσαρμόστε τα ονόματα
     
     const [modalVisible, setModalVisible] = useState(false);
     const [randomNumber, setRandomNumber] = useState(null);
@@ -79,7 +81,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
                         >
                             {icons[route.name] ? (
                                 icons[route.name]({
-                                    color: isFocused ? 'white' : '#E1E1E1',
+                                    
                                 })
                             ) : null}
 
