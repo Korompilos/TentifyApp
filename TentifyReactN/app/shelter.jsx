@@ -101,7 +101,7 @@ const shelter = () => {
 
     <View style={styles.shelter}>
                             
-       <Button title="Find Shelter" onPress={handleFindShelter}/>
+       <Button title="Find Shelter" onPress={handleFindShelter} style={styles.btn}/>
     </View>
     </ImageBackground>
     </SafeAreaView>
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
         shelter: {
             top: 655,
             right: 0,
-            width: 700
+            width: 700,
         },
         mapImage: {
                 width: Platform.OS === 'web' ? 700 : 350, // Κάνει την εικόνα να πιάνει όλο το πλάτος
