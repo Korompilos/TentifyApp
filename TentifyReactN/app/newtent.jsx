@@ -30,6 +30,42 @@ export default function App() {
 
     const [panelText, setPanelText] = useState('');
 
+    const [selectedButton, setSelectedButton] = useState(null);
+
+    useEffect(() => {
+        // Φόρτωση του αποθηκευμένου κουμπιού κατά το άνοιγμα
+        const loadSelectedButton = async () => {
+            try {
+                const storedButton = await AsyncStorage.getItem('selectedButton');
+                if (storedButton) {
+                    setSelectedButton(JSON.parse(storedButton));
+                }
+            } catch (error) {
+                console.log('Error loading selected button:', error);
+            }
+        };
+
+        loadSelectedButton();
+
+        // Διαγραφή των αποθηκευμένων δεδομένων όταν γίνεται refresh
+        return () => {
+            AsyncStorage.removeItem('selectedButton');
+            setSelectedButton(null);
+        };
+    }, []);
+
+    const handleButtonPress = async (id) => {
+        try {
+            await AsyncStorage.setItem('selectedButton', JSON.stringify(id));
+            setSelectedButton(id);
+            //router.push('/shelter'); // Μεταφορά στη σελίδα shelter
+        } catch (error) {
+            console.log('Error saving selected button:', error);
+        }
+    };
+
+
+
     return (
         <SafeAreaProvider>
 
@@ -90,7 +126,8 @@ export default function App() {
                     {buttonData.map((btn, index) => (
                         <TouchableOpacity
                             key={index}
-                            onPress={() => router.push('/stakes')}
+                            onPress={() => {handleButtonPress(btn.id);
+                                            router.push('/stakes')}}
                             style={[styles.buttonWrapper, { top: btn.top, left: btn.left }]}
                             onMouseEnter={() => setPanelText(btn.text)} // Όταν κάνετε hover
                             onMouseLeave={() => setPanelText('')} // Όταν φεύγετε από το κουμπί
