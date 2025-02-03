@@ -10,10 +10,29 @@ const sports = () => {
 
     const [activeButtons, setActiveButtons] = useState([false, false, false]);
 
+    const [buttonStatuses, setButtonStatuses] = useState(['Participate', 'Participate', 'Participate']);
+
     const handlePress = (index) => {
         const updatedButtons = [...activeButtons];
         updatedButtons[index] = !updatedButtons[index];
         setActiveButtons(updatedButtons);
+
+        if (!updatedButtons[index]) {
+            // Αν το απενεργοποιεί, το status επιστρέφει στο αρχικό
+            updateButtonStatus(index, 'Participate');
+        } else {
+            // Αν το ενεργοποιεί, αρχίζει η αλλαγή status
+            updateButtonStatus(index, 'Request Sent');
+            setTimeout(() => updateButtonStatus(index, 'Pending'), 3000);
+            setTimeout(() => updateButtonStatus(index, 'Request Accepted'), 6000);
+        }
+    };
+    const updateButtonStatus = (index, status) => {
+        setButtonStatuses(prevStatuses => {
+            const newStatuses = [...prevStatuses];
+            newStatuses[index] = status;
+            return newStatuses;
+        });
     };
 
   return (
@@ -43,9 +62,10 @@ const sports = () => {
                           <TouchableOpacity
                               key={index}
                               style={[styles.button, isActive && styles.activeButton]}
-                              onPress={() => handlePress(index)}
+                              onPress={() => handlePress(index)
+                                                }
                           >
-                              <Text style={styles.text}>{isActive ? 'Participated' : 'Participate'}</Text>
+                              <Text style={styles.text}>{buttonStatuses[index]}</Text>
                           </TouchableOpacity>
                       ))}
                   </View>

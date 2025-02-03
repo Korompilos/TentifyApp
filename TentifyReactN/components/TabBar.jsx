@@ -5,6 +5,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import shelter from '../app/shelter';
 
 const TabBar = ({ state, descriptors, navigation }) => {
 
@@ -14,10 +16,11 @@ const TabBar = ({ state, descriptors, navigation }) => {
         cafe: (props) => <Ionicons name="fast-food" size={24} color="white" {...props} />,
         weather: (props) => <MaterialCommunityIcons name="weather-partly-lightning" size={24} color="white" {...props} />,
         sports: (props) => <MaterialIcons name="sports-handball" size={24} color="white" {...props} />,
+        shelter: (props) => <MaterialIcons name="night-shelter" size={24} color="white" {...props} />,
     };
 
     // Καθορισμός των routes που θέλουμε να εμφανίζονται
-    const visibleRoutes = ['onlinehelp', 'energy', 'cafe', 'weather', 'sports']; // Προσαρμόστε τα ονόματα
+    const visibleRoutes = ['onlinehelp', 'energy', 'cafe', 'weather', 'sports', 'shelter']; // Προσαρμόστε τα ονόματα
     
     const [modalVisible, setModalVisible] = useState(false);
     const [randomNumber, setRandomNumber] = useState(null);
@@ -30,10 +33,11 @@ const TabBar = ({ state, descriptors, navigation }) => {
         4: require('../assets/images/weather4.png'),
     };
 
-    const generateRandomNumber = () => {
+    const generateRandomNumber = async () => {
         if (randomNumber === null) {
             const newRandomNumber = Math.floor(Math.random() * 4) + 1;
             setRandomNumber(newRandomNumber);
+            await AsyncStorage.setItem('weatherRandomNumber', newRandomNumber.toString());
         }
         setModalVisible(true);
     };

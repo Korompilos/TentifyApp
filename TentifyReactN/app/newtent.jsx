@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { Text, View, StyleSheet, Platform, Image, TouchableOpacity, Pressable, Modal } from 'react-native';
+import { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, Platform, Image, TouchableOpacity, Pressable, Modal, Button } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { ImageBackground } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function App() {
@@ -15,13 +16,15 @@ export default function App() {
 
     // Συντεταγμένες κουμπιών
     const buttonData = [
-        { top: 160, left: 100, text: "Coordinates:\n    -Height: 37.9755 \n    -Width: 23.7345\nHumidity: 23% \nGround Stability: 7,5/10\nSun Coverage: No" },   // Θέση 1
-        { top: 200, left: 470, text: "Coordinates:\n    -Height: 36.6770 \n    -Width: 25.7338\nHumidity: 27% \nGround Stability: 6/10\nSun Coverage: Yes" },  // Θέση 2
-        { top: 390, left: 250, text: "Coordinates:\n    -Height: 33.8752 \n    -Width: 24.0362\nHumidity: 34% \nGround Stability: 7/10\nSun Coverage: No" },  // Θέση 3
-        { top: 480, left: 350, text: "Coordinates:\n    -Height: 33.2765 \n    -Width: 24.6345\nHumidity: 31% \nGround Stability: 8/10\nSun Coverage: No" },  // Θέση 4
-        { top: 500, left: 470, text: "Coordinates:\n    -Height: 33.0755 \n    -Width: 25.9338\nHumidity: 20% \nGround Stability: 7,5/10\nSun Coverage: Yes" },  // Θέση 5
-        { top: 580, left: 650, text: "Coordinates:\n    -Height: 32.2755 \n    -Width: 27.5345\nHumidity: 17% \nGround Stability: 9/10\nSun Coverage: Yes" },  // Θέση 6
+        { id: 1, top: 160, left: 100, text: "Coordinates:\n    -Height: 37.9755 \n    -Width: 23.7345\nHumidity: 23% \nGround Stability: 7,5/10\nSun Coverage: No" },   // Θέση 1
+        { id: 2, top: 200, left: 470, text: "Coordinates:\n    -Height: 36.6770 \n    -Width: 25.7338\nHumidity: 27% \nGround Stability: 6/10\nSun Coverage: Yes" },  // Θέση 2
+        { id: 3, top: 390, left: 250, text: "Coordinates:\n    -Height: 33.8752 \n    -Width: 24.0362\nHumidity: 34% \nGround Stability: 7/10\nSun Coverage: No" },  // Θέση 3
+        { id: 4, top: 480, left: 350, text: "Coordinates:\n    -Height: 33.2765 \n    -Width: 24.6345\nHumidity: 31% \nGround Stability: 8/10\nSun Coverage: No" },  // Θέση 4
+        { id: 5, top: 500, left: 470, text: "Coordinates:\n    -Height: 33.0755 \n    -Width: 25.9338\nHumidity: 20% \nGround Stability: 7,5/10\nSun Coverage: Yes" },  // Θέση 5
+        { id: 6, top: 580, left: 650, text: "Coordinates:\n    -Height: 32.2755 \n    -Width: 27.5345\nHumidity: 17% \nGround Stability: 9/10\nSun Coverage: Yes" },  // Θέση 6
     ];
+
+    
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -99,7 +102,7 @@ export default function App() {
                             />
                         </TouchableOpacity>
                     ))}
-
+                    
                     <StatusBar style="auto" />
                 </ImageBackground>
                 <Modal
@@ -160,6 +163,10 @@ const styles = StyleSheet.create({
         marginTop: Platform.OS === 'web' ? 0 : 40,
         position: 'absolute',
         top: Platform.OS === 'web' ? -60 : -70,
+    },
+    shelter: {
+        top: 270,
+        right: -380
     },
     panelhdr: {
         position: 'absolute',
