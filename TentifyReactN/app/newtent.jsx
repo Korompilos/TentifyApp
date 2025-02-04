@@ -70,6 +70,19 @@ export default function App() {
         loadPressedButtons();
     }, []);
 
+    useEffect(() => {
+        const resetPressedButtons = async () => {
+            try {
+                await AsyncStorage.removeItem('pressedButtons'); // Διαγραφή αποθηκευμένων κουμπιών
+                setPressedButtons({}); // Επαναφορά στο αρχικό state
+            } catch (error) {
+                console.log('Error resetting pressed buttons:', error);
+            }
+        };
+
+        resetPressedButtons();
+    }, []);
+
     const handleButtonPress = async (id) => {
         try {
             await AsyncStorage.setItem('selectedButton', JSON.stringify(id));

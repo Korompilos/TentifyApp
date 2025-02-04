@@ -119,7 +119,10 @@ const lights = () => {
                                     <Image source={require('../assets/images/bck.png')} />
                                    
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.navButton} onPress={() => router.push("/newtent")}>
+                                <TouchableOpacity style={styles.navButton} onPress={() => {if (selectedColor !== '#FFFFFF') {
+                                    router.push("/newtent"); // Μεταφέρεται στη σελίδα μόνο αν έχει επιλεγεί χρώμα διαφορετικό από λευκό
+                                }
+                                }}>
                                     <Image source={require('../assets/images/nxt.png')} />
                                    
                                 </TouchableOpacity>
