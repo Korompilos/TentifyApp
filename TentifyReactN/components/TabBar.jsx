@@ -6,9 +6,12 @@ import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import shelter from '../app/shelter';
 
 const TabBar = ({ state, descriptors, navigation }) => {
+
+    const nav = useNavigation();
 
     const icons = {
         onlinehelp: (props) => <Entypo name="help-with-circle" size={24} color="white" {...props} />,
@@ -42,8 +45,24 @@ const TabBar = ({ state, descriptors, navigation }) => {
         setModalVisible(true);
     };
 
+    const handleBackPress = () => {
+        // Αν είμαστε στην πρώτη οθόνη (index), πηγαίνουμε εκεί με navigation.navigate('index')
+        if (state.index === 0) {
+            navigation.navigate('index');
+        } else {
+            // Αν είμαστε σε άλλες οθόνες, επιστρέφουμε στο προηγούμενο tab
+            navigation.goBack();
+        }
+    };
+
     return ( 
         <View style={styles.tabbar}>
+            <TouchableOpacity
+                style={styles.backButton}
+                onPress={handleBackPress}  // Εδώ καλούμε τη συνάρτηση handleBackPress
+            >
+                <Ionicons name="arrow-back" size={24} color="white" />
+            </TouchableOpacity>
             {state.routes
                 .filter(route => visibleRoutes.includes(route.name)) // Φιλτράρουμε μόνο τα επιθυμητά routes
                 .map((route, index) => {
@@ -116,6 +135,7 @@ const styles = StyleSheet.create({
     tabbar: {
         flexDirection: 'row',
         position: 'absolute',
+
         top: 20,
         right: 0,
         justifyContent: 'space-between',
@@ -141,6 +161,13 @@ const styles = StyleSheet.create({
     label: {
         color: 'white',
         fontSize: 12,
+    },
+    backButton: {
+        position: 'absolute',
+        left: -50,
+        top: 0,
+        padding: 10,
+        //backgroundColor: 'black'
     },
     modalContainer: {
         flex: 1,

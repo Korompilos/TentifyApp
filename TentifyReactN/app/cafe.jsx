@@ -218,6 +218,12 @@ const cafe = () => {
               style={styles.headerImage}
               resizeMode="contain"
             />
+
+              <Image
+                source={require('../assets/images/chat.png')}
+                style={styles.chat}
+                resizeMode="contain"
+              />
             
             </ImageBackground>
             </SafeAreaView>
@@ -259,6 +265,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  chat: {
+    top: 100,
+    width: '60%'
   },
   headerImage: {
     width: '100%',
