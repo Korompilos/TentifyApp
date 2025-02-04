@@ -44,6 +44,7 @@ export default function App() {
                 [{ text: "OK" }]
             );
         } else {
+            window.alert('Your Tent has been successfully set up! Move on to the protective cover placement and lighting selection');
             router.push("/covers"); // Μετακίνηση στη νέα οθόνη αν όλα είναι σωστά
         }
     };

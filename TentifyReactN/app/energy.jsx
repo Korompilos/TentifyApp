@@ -21,22 +21,22 @@ const energy = () => {
   // Υπολογισμός ενέργειας για κάθε κατηγορία
   const toggleAC = () => {
     setIsACOn((prev) => !prev);
-    updateEnergyConsumption(!isACOn ? 30 : -30);
+    updateEnergyConsumption(!isACOn ? 300 : -300);
   };
 
   const toggleLights = () => {
     setIsLightsOn((prev) => !prev);
-    updateEnergyConsumption(!isLightsOn ? 20 : -20);
+    updateEnergyConsumption(!isLightsOn ? 100 : -100);
   };
 
   const toggleHeating = () => {
     setIsHeatingOn((prev) => !prev);
-    updateEnergyConsumption(!isHeatingOn ? 50 : -50);
+    updateEnergyConsumption(!isHeatingOn ? 250 : -250);
   };
 
   const toggleAppliances = () => {
     setIsAppliancesOn((prev) => !prev);
-    updateEnergyConsumption(!isAppliancesOn ? 35 : -35);
+    updateEnergyConsumption(!isAppliancesOn ? 150 : -150);
   };
 
   const updateEnergyConsumption = (change) => {
@@ -57,24 +57,12 @@ const energy = () => {
       if (isACOn && isLightsOn && isHeatingOn && isAppliancesOn) {
         setBatteryLevel((prev) => Math.max(0, prev - 1.9));
       }
-      // Όταν είναι ενεργοποιημένα τα 3: Φώτα, Θέρμανση και Συσκευές
-      else if (isLightsOn && isHeatingOn && isAppliancesOn) {
-        setBatteryLevel((prev) => Math.max(0, prev - 0.6));
-      }
       // Όταν είναι ενεργοποιημένα AC, Φώτα και Θέρμανση
-      else if (isACOn && isLightsOn && isHeatingOn) {
+      else if (isACOn && isLightsOn && isHeatingOn || isACOn && isAppliancesOn && isHeatingOn || isAppliancesOn && isLightsOn && isHeatingOn ) {
         setBatteryLevel((prev) => Math.max(0, prev - 0.6));
       }
       // Όταν είναι ενεργοποιημένα μόνο AC και Φώτα
-      else if (isACOn && isLightsOn) {
-        setBatteryLevel((prev) => Math.max(0, prev - 0.2));
-      }
-      // Όταν είναι ενεργοποιημένα AC και Θέρμανση
-      else if (isACOn && isHeatingOn) {
-        setBatteryLevel((prev) => Math.max(0, prev - 0.2));
-      }
-      // Όταν είναι ενεργοποιημένα AC και Συσκευές
-      else if (isACOn && isAppliancesOn) {
+      else if (isACOn && isLightsOn || isACOn && isHeatingOn || isACOn && isAppliancesOn || isLightsOn && isHeatingOn || isLightsOn && isAppliancesOn || isAppliancesOn && isHeatingOn) {
         setBatteryLevel((prev) => Math.max(0, prev - 0.2));
       }
       // Όταν όλα είναι κλειστά, η μπαταρία φορτίζει σταδιακά
