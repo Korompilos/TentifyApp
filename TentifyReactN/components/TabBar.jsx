@@ -46,23 +46,32 @@ const TabBar = ({ state, descriptors, navigation }) => {
     };
 
     const handleBackPress = () => {
-        // Αν είμαστε στην πρώτη οθόνη (index), πηγαίνουμε εκεί με navigation.navigate('index')
-        if (state.index === 0) {
-            navigation.navigate('index');
+        const backRoutes = {
+            stakes: 'newtent',
+            lights: 'covers',
+            covers: 'stakes',
+            
+        };
+
+        const currentRoute = state.routes[state.index].name;
+
+        if (backRoutes[currentRoute]) {
+            navigation.navigate(backRoutes[currentRoute]); // Μετάβαση στην προηγούμενη καθορισμένη σελίδα
         } else {
-            // Αν είμαστε σε άλλες οθόνες, επιστρέφουμε στο προηγούμενο tab
-            navigation.goBack();
+            navigation.goBack(); // Επιστροφή στην προηγούμενη σελίδα αν δεν υπάρχει ορισμένη διαδρομή
         }
     };
 
     return ( 
         <View style={styles.tabbar}>
-            <TouchableOpacity
-                style={styles.backButton}
-                onPress={handleBackPress}  // Εδώ καλούμε τη συνάρτηση handleBackPress
-            >
-                <Ionicons name="arrow-back" size={24} color="white" />
-            </TouchableOpacity>
+            {state.routes[state.index].name !== 'index' && state.routes[state.index].name !== 'lights' && state.routes[state.index].name !== 'cafe' && state.routes[state.index].name !== 'energy' && state.routes[state.index].name !== 'onlinehelp' && state.routes[state.index].name !== 'sports' && state.routes[state.index].name !== 'shelter' &&(
+                <TouchableOpacity
+                    style={styles.backButton}
+                    onPress={handleBackPress}
+                >
+                    <Ionicons name="arrow-back" size={24} color="white" />
+                </TouchableOpacity>
+            )}
             {state.routes
                 .filter(route => visibleRoutes.includes(route.name)) // Φιλτράρουμε μόνο τα επιθυμητά routes
                 .map((route, index) => {

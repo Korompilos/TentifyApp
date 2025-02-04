@@ -34,6 +34,10 @@ export default function App() {
         setbtnSource3(image);
     };
 
+    const nextpage = () => {
+        router.push("/newtent");
+    }
+
     return (
         <ImageBackground
             source={require('../assets/images/background-image2.jpg')}
@@ -109,11 +113,18 @@ export default function App() {
                             </ImageBackground>
                         </TouchableOpacity>
                         
-            
+            <TouchableOpacity onPress={() => {nextpage();}}>
+                <Image
+                    source={require('../assets/images/nxt.png')}
+                    style={styles.nxtbtn}
+                    resizeMode="contain"
+                />
+            </TouchableOpacity>
 
             
             <StatusBar style="auto" />
         </ImageBackground>
+        
     );
 }
 
@@ -133,14 +144,21 @@ const styles = StyleSheet.create({
         top: Platform.OS === 'web' ? -60 : -70,
     },
 
+    nxtbtn: {
+        width: 30,
+        height: 30,
+        top: 100,
+        marginLeft: 0,
+    },
+
     ourfxImage: {
-        marginRight: 950,
+        marginRight: 900,
         top: -60
     },
 
     button: {
         top: -440,
-        marginRight: 952,
+        marginRight: 910,
         borderRadius: 10,
         marginBottom: 20
     },
@@ -179,7 +197,6 @@ const styles = StyleSheet.create({
     },
 
     fxImage: {
-        
         top: 480,
         marginRight: -550
     }

@@ -22,6 +22,7 @@ export default function RootLayout() {
                 <Tabs.Screen name='stakes' options={{ headerShown: false }} />
                 <Tabs.Screen name='sports' options={{ headerShown: false }} />
                 <Tabs.Screen name='shelter' options={{ headerShown: false }} />
+                <Tabs.Screen name='lights' options={{ headerShown: false }} />
             </Tabs>
         </CustomProvider>
          

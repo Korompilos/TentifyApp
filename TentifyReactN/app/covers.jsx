@@ -20,7 +20,7 @@ export default function App() {
     };
     
     const nextpage = () => {
-        router.push("/lighting1");
+        router.push("/lights");
     }
 
     return (
@@ -88,6 +88,7 @@ export default function App() {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.button} onPress={nextpage}>
+
                         <Image
                             source={require('../assets/images/nxt.png')}
                             style={styles.nxtbtn}
@@ -118,7 +119,8 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         top: 10,
-        marginLeft: 600
+        marginLeft: 600,
+        zIndex: 10,
     },
     headerImage: {
         width: '100%',
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
         top: -550,
         marginRight: -850,
         borderRadius: 10,
-        marginBottom: 20
+        marginBottom: 20,
     },
     buttonBackground: {
         width: Platform.OS === 'web' ? 300 : 100,

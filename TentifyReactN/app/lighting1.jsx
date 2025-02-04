@@ -24,7 +24,7 @@ export default function App() {
     const router = useRouter();
 
     const nextpage = () => {
-        router.push("/onlinehelp");
+        router.push("/lights");
     }
 
     const lightpage2 = () => {
