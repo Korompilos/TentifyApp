@@ -26,7 +26,7 @@ export default function App() {
 
     
 
-    const [modalVisible, setModalVisible] = useState(false);
+    const [pressedButtons, setPressedButtons] = useState({});
 
     const [panelText, setPanelText] = useState('');
 
@@ -54,11 +54,29 @@ export default function App() {
         };
     }, []);
 
+    useEffect(() => {
+        // Φόρτωση αποθηκευμένων κουμπιών κατά την εκκίνηση
+        const loadPressedButtons = async () => {
+            try {
+                const storedButtons = await AsyncStorage.getItem('pressedButtons');
+                if (storedButtons) {
+                    setPressedButtons(JSON.parse(storedButtons));
+                }
+            } catch (error) {
+                console.log('Error loading pressed buttons:', error);
+            }
+        };
+
+        loadPressedButtons();
+    }, []);
+
     const handleButtonPress = async (id) => {
         try {
             await AsyncStorage.setItem('selectedButton', JSON.stringify(id));
             setSelectedButton(id);
-            //router.push('/shelter'); // Μεταφορά στη σελίδα shelter
+            const updatedButtons = { ...pressedButtons, [id]: true };
+            setPressedButtons(updatedButtons);
+            await AsyncStorage.setItem('pressedButtons', JSON.stringify(updatedButtons));
         } catch (error) {
             console.log('Error saving selected button:', error);
         }
@@ -125,7 +143,7 @@ export default function App() {
                     {/* Buttons */}
                     {buttonData.map((btn, index) => (
                         <TouchableOpacity
-                            key={index}
+                            key={btn.id}
                             onPress={() => {handleButtonPress(btn.id);
                                             router.push('/stakes')}}
                             style={[styles.buttonWrapper, { top: btn.top, left: btn.left }]}
@@ -133,7 +151,10 @@ export default function App() {
                             onMouseLeave={() => setPanelText('')} // Όταν φεύγετε από το κουμπί
                         >
                             <Image
-                                source={require('../assets/images/add.png')}
+                                source={
+                                    pressedButtons[btn.id]
+                                        ? require('../assets/images/check.png')
+                                        : require('../assets/images/add.png')}
                                 style={styles.buttonImage}
                                 resizeMode="contain"
                             />
@@ -142,43 +163,6 @@ export default function App() {
                     
                     <StatusBar style="auto" />
                 </ImageBackground>
-                <Modal
-                    animationType="fade"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                        //Alert.alert('Modal has been closed.');
-                        setModalVisible(!modalVisible);
-                    }}>
-                    <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Text style={styles.textHeader}>
-                                {`
-                SELECT A LOCATION FROM THE MAP TO SET UP YOUR TENT.`}
-                            </Text>
-
-                            <Text style={styles.textThings}>
-                                {`
-                The interactive map will provide you some suggestions on locations that can be suitable for setting up a tent (add points). After hovering your cursor over each of the add points, a pop up will appear, with useful info on the ground’s stability, the humidity etc. After choosing your desired spot, click on it's add point so you can on to the stakes' placement.
-                
-                `}
-                            
-                            </Text>
-                            <Pressable
-                                style={[styles.button, styles.buttonClose]}
-                                onPress={() => setModalVisible(!modalVisible)}>
-                                <Text style={styles.textStyle}>CLOSE</Text>
-                            </Pressable>
-                        </View>
-                    </View>
-                </Modal>
-                <Pressable onPress={() => setModalVisible(true)} style={styles.infoButton}>
-                    <Image
-                        source={require('../assets/icons/info.png')}
-                        style={styles.infoButtonImage}
-                        resizeMode="contain"
-                    />
-                </Pressable>
 
             </SafeAreaView>
         </SafeAreaProvider>

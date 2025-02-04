@@ -114,7 +114,16 @@ const lights = () => {
                                 resizeMode="contain"
                             />
 
-                            
+                            <View style={styles.buttonContainer2}>
+                                <TouchableOpacity style={styles.navButton} onPress={() => setCurrentScreen('Home')}>
+                                    <Image source={require('../assets/images/bck.png')} />
+                                   
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.navButton} onPress={() => router.push("/newtent")}>
+                                    <Image source={require('../assets/images/nxt.png')} />
+                                   
+                                </TouchableOpacity>
+                            </View>
 
                             {/* Color Panel */}
                                         <View style={[styles.colorPanel, { backgroundColor: modifyColor(selectedColor) }]}>
@@ -185,10 +194,7 @@ const lights = () => {
                                                     onValueChange={setContrast}
                                             />     
 
-                            {/* Back Button */}
-                            <TouchableOpacity style={styles.backButton} onPress={() => setCurrentScreen('Home')}>
-                                <Text style={styles.backButtonText}> Back</Text>
-                            </TouchableOpacity>         
+                                   
                                         <StatusBar style="auto" />
 
                         </ImageBackground>
@@ -208,6 +214,17 @@ const lights = () => {
                                 style={styles.headerImage}
                                 resizeMode="contain"
                             />
+
+                            <View style={styles.buttonContainer2}>
+                                <TouchableOpacity style={styles.navButton} onPress={() => setCurrentScreen('Home')}>
+                                    <Image source={require('../assets/images/bck.png')} />
+
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.navButton} onPress={() => router.push("/newtent")}>
+                                    <Image source={require('../assets/images/nxt.png')} />
+
+                                </TouchableOpacity>
+                            </View>
 
                             <Image
                                             source={fxImageSource}
@@ -270,12 +287,7 @@ const lights = () => {
                                                         </ImageBackground>
                                                     </TouchableOpacity>
 
-                            <TouchableOpacity
-                                style={styles.backButton}
-                                onPress={setCurrentScreen('home')}
-                            >
-                                <Ionicons name="arrow-back" size={24} color="white" />
-                            </TouchableOpacity>
+                            
                             <StatusBar style="auto" />
 
                         </ImageBackground>
@@ -301,21 +313,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    backButton: {
-        position: 'absolute',
-        top: Platform.OS === 'ios' ? 60 : 40, // Καλύτερη θέση για iOS & Android
-        left: 20,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)', // Πιο ευδιάκριτο
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        borderRadius: 10,
-        zIndex: 10, // Εξασφαλίζει ότι θα εμφανίζεται πάνω από άλλα στοιχεία
-    },
-
-    backButtonText: {
-        color: 'white',
-        fontSize: 20,
-        fontWeight: 'bold',
+    buttonContainer2: {
+        marginTop: 40, // Σπρώχνει τα κουμπιά πιο κάτω
+        flexDirection: 'row', // Τα κάνει να μπαίνουν δίπλα-δίπλα
+        justifyContent: 'center', // Κεντράρει οριζόντια
+        top: 600,
+        left: 700,
+        zIndex:10
     },
 
     buttonContainer: {
@@ -324,30 +328,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center', // Κεντράρει οριζόντια
         width: 1500,
         left: 150,
-        top: 270
-    },
-    navButton: {
-        backgroundColor: '#606FB6',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-        marginHorizontal: 10, // Δίνει απόσταση μεταξύ των κουμπιών
-    },
-    navButtonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
+        top: 200
     },
     chat: {
         top: 100,
         width: '60%'
     },
     navButton: {
-        backgroundColor: '#606FB6',
+        //backgroundColor: '#606FB6',
         paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingHorizontal: 5,
         borderRadius: 5,
-        marginHorizontal: 10, // Δίνει απόσταση μεταξύ των κουμπιών
+        marginHorizontal: 0, // Δίνει απόσταση μεταξύ των κουμπιών
         zIndex: 10
     },
     navButtonText: {
@@ -445,7 +437,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#FFFFFF',
         //marginTop: 10,
-        top: -400,
+        top: -520,
         marginLeft: 650,
         fontFamily: "BobbyJones"
     },
@@ -454,7 +446,7 @@ const styles = StyleSheet.create({
         width: 300,
         height: 70,
         marginVertical: 5,
-        top: -400,
+        top: -520,
         marginLeft: 650,
         zIndex: 10,
     },
@@ -478,7 +470,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
         marginLeft: -600, // Πάνελ αριστερά
-        top: 100,
+        top: 7,
         marginVertical: 20,
         shadowColor: '#000',
         shadowOpacity: 0.2,
@@ -528,7 +520,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         //marginBottom: 0,
-        top: -480,
+        top: -570,
         marginLeft: 650, // Παλέτα δεξιά του πάνελ
 
     },
@@ -543,11 +535,11 @@ const styles = StyleSheet.create({
 
     ourfxImage: {
         marginRight: 900,
-        top: -420
+        top: -520
     },
 
     buttonm: {
-        top: -800,
+        top: -900,
         marginRight: 910,
         borderRadius: 10,
         marginBottom: 20
@@ -587,8 +579,8 @@ const styles = StyleSheet.create({
     },
 
     fxImage: {
-        top: 120,
-        marginRight: -550
+        top: 20,
+        marginRight: -470
     },
     backButton: {
         position: 'absolute',
