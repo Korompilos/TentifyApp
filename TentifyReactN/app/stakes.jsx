@@ -28,6 +28,12 @@ export default function App() {
         groupedStakes.push(stakes.slice(i, i + 3));
     }
 
+    const showAlert = () => {
+        window.alert('Your Tent has been successfully set up! Move on to the protective cover placement and lighting selection');
+    }
+
+    const [myNumber, setMyNumber] = useState(0); // Αριθμητική μεταβλητή (integer)
+
     const headerImageSource = Platform.OS === 'web'
         ? require('../assets/images/top.png')
         : require('../assets/images/top2.png');
@@ -44,7 +50,11 @@ export default function App() {
                 [{ text: "OK" }]
             );
         } else {
-            window.alert('Your Tent has been successfully set up! Move on to the protective cover placement and lighting selection');
+            if (myNumber === 0) {
+                setMyNumber(prev => prev + 1);
+                showAlert();
+                
+            }
             router.push("/covers"); // Μετακίνηση στη νέα οθόνη αν όλα είναι σωστά
         }
     };

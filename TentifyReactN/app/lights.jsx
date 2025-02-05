@@ -77,6 +77,11 @@ const lights = () => {
                                 style={styles.headerImage}
                                 resizeMode="contain"
                             />
+
+                            <TouchableOpacity style={styles.navButton2} onPress={() => router.push("/covers")}>
+                                <Image source={require('../assets/images/bck.png')} />
+
+                            </TouchableOpacity>
                             <View style={styles.buttonContainer}>
                             <TouchableOpacity
                                 style={styles.buttonn}
@@ -94,6 +99,15 @@ const lights = () => {
                                     }}
                                 >
                                 <Text style={styles.buttonTextn}>Premade Lighting Effects</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    style={styles.buttonn}
+                                    onPress={() => {
+                                        router.push("/newtent")
+                                    }}
+                                >
+                                    <Text style={styles.buttonTextn}>No Lighting Effects</Text>
                                 </TouchableOpacity>
                             </View>
                         </ImageBackground>
@@ -114,8 +128,8 @@ const lights = () => {
                                 resizeMode="contain"
                             />
 
-                            <View style={styles.buttonContainer2}>
-                                <TouchableOpacity style={styles.navButton} onPress={() => setCurrentScreen('Home')}>
+                            
+                                <TouchableOpacity style={styles.navButton2} onPress={() => setCurrentScreen('Home')}>
                                     <Image source={require('../assets/images/bck.png')} />
                                    
                                 </TouchableOpacity>
@@ -126,7 +140,7 @@ const lights = () => {
                                     <Image source={require('../assets/images/nxt.png')} />
                                    
                                 </TouchableOpacity>
-                            </View>
+                            
 
                             {/* Color Panel */}
                                         <View style={[styles.colorPanel, { backgroundColor: modifyColor(selectedColor) }]}>
@@ -218,8 +232,8 @@ const lights = () => {
                                 resizeMode="contain"
                             />
 
-                            <View style={styles.buttonContainer2}>
-                                <TouchableOpacity style={styles.navButton} onPress={() => setCurrentScreen('Home')}>
+                            
+                                <TouchableOpacity style={styles.navButton2} onPress={() => setCurrentScreen('Home')}>
                                     <Image source={require('../assets/images/bck.png')} />
 
                                 </TouchableOpacity>
@@ -227,7 +241,7 @@ const lights = () => {
                                     <Image source={require('../assets/images/nxt.png')} />
 
                                 </TouchableOpacity>
-                            </View>
+                        
 
                             <Image
                                             source={fxImageSource}
@@ -343,7 +357,20 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         borderRadius: 5,
         marginHorizontal: 0, // Δίνει απόσταση μεταξύ των κουμπιών
-        zIndex: 10
+        zIndex: 10,
+        top: 580,
+        left: 700
+    },
+    navButton2: {
+        //backgroundColor: '#606FB6',
+        width: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 5,
+        borderRadius: 5,
+        marginHorizontal: 0, // Δίνει απόσταση μεταξύ των κουμπιών
+        zIndex: 10,
+        top: 25,
+        left: 260
     },
     navButtonText: {
         color: 'white',

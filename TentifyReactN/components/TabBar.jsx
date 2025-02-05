@@ -48,7 +48,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
     const handleBackPress = () => {
         const backRoutes = {
             stakes: 'newtent',
-            lights: 'covers',
+            //lights: 'covers',
             covers: 'stakes',
             
         };
@@ -64,7 +64,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
     return ( 
         <View style={styles.tabbar}>
-            {state.routes[state.index].name !== 'index' &&  state.routes[state.index].name !== 'cafe' && state.routes[state.index].name !== 'energy' && state.routes[state.index].name !== 'onlinehelp' && state.routes[state.index].name !== 'sports' && state.routes[state.index].name !== 'shelter' &&(
+            {state.routes[state.index].name !== 'index' && state.routes[state.index].name !== 'lights' &&  state.routes[state.index].name !== 'cafe' && state.routes[state.index].name !== 'energy' && state.routes[state.index].name !== 'onlinehelp' && state.routes[state.index].name !== 'sports' && state.routes[state.index].name !== 'shelter' &&(
                 <TouchableOpacity
                     style={styles.backButton}
                     onPress={handleBackPress}
